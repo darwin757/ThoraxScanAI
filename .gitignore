@@ -1,3 +1,5 @@
 __pycache__/
 # Ignore processed dataset directory
 NNDataset/
+# Ignore trained model file
+best_model.h5
