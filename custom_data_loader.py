@@ -22,8 +22,10 @@ class CustomDataLoader:
     def get_class_names(self):
         """
         Retrieve and return a sorted list of class names from the dataset path.
+        Dynamically finds class names based on the directories within the 'train' subset.
         """
-        class_names = sorted(name for name in os.listdir(self.dataset_path) if os.path.isdir(os.path.join(self.dataset_path, name)))
+        train_path = os.path.join(self.dataset_path, 'train')  # Path to the training data
+        class_names = sorted(name for name in os.listdir(train_path) if os.path.isdir(os.path.join(train_path, name)))
         return class_names
 
     def parse_image(self, img_path):
