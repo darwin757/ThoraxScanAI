@@ -1,6 +1,7 @@
 import tensorflow as tf
 from data_preprocessing import create_data_generators
 from model import build_model
+from utils import plot_training_history
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 
@@ -34,6 +35,11 @@ def main():
         epochs=50,
         validation_data=validation_generator,
         callbacks=[checkpoint, early_stopping, reduce_lr])
+
+
+    # Plot the training history
+    plot_training_history(history)
+
 
 if __name__ == '__main__':
     main()
