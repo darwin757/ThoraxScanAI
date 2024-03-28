@@ -6,9 +6,30 @@ import itertools
 import matplotlib.pyplot as plt
 
 def load_model(model_path):
+    """
+    Load a trained Keras model from the specified file path.
+
+    Args:
+        model_path (str): The path to the saved model file.
+
+    Returns:
+        tf.keras.Model: The loaded Keras model.
+
+    """
     return tf.keras.models.load_model(model_path)
 
 def create_test_generator(test_dir, img_size=(224, 224), batch_size=32):
+    """
+    Create a test data generator using the provided test directory, image size, and batch size.
+
+    Parameters:
+    - test_dir: A string representing the directory path where the test images are located.
+    - img_size: A tuple representing the size of the images (default is (224, 224)).
+    - batch_size: An integer representing the batch size for generating test data (default is 32).
+
+    Returns:
+    - test_generator: A data generator for test images.
+    """
     test_datagen = ImageDataGenerator(rescale=1./255)
     test_generator = test_datagen.flow_from_directory(
         test_dir,
