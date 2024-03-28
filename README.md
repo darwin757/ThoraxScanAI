@@ -11,6 +11,10 @@ The project is structured into several key scripts, each fulfilling a specific r
 - `model.py`: Defines the model architecture using VGG16 as a base for transfer learning.
 - `train.py`: Orchestrates the model training process with callbacks for efficient learning.
 - `evaluate.py`: Evaluates the trained model on a test set and generates performance metrics.
+- `utils.py`: Contains utility functions such as plotting training history and processing single images for prediction.
+- `predict_single_image.py`: Allows for classifying a single X-ray image using the trained model, demonstrating model usage on individual cases.
+
+## Getting Started
 
 ## Getting Started
 
@@ -55,6 +59,14 @@ After training, evaluate the model's performance on the test set with `evaluate.
 
 ```bash
 python evaluate.py
+```
+
+### Single Image Prediction
+
+The project now includes a script for predicting the class of a single X-ray image using the trained model. After training, you can predict new images with:
+
+```bash
+python predict_single_image.py path/to/image.jpg
 ```
 
 ## License
