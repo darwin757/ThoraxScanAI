@@ -1,5 +1,5 @@
 __pycache__/
 # Ignore processed dataset directory
-NNDataset/
+ThoraxScanData/
 # Ignore trained model file
 best_model.h5
