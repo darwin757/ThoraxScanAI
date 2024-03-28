@@ -3,3 +3,4 @@ __pycache__/
 ThoraxScanData/
 # Ignore trained model file
 best_model.h5
+BaselineModel.h5
