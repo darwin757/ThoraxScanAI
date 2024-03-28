@@ -83,6 +83,9 @@ class CustomDataLoader:
         image_ds = path_ds.map(self.parse_image, num_parallel_calls=AUTOTUNE)
         label_ds = tf.data.Dataset.from_tensor_slices(tf.cast(labels, tf.int64))
         
+        # Apply one-hot encoding to the labels
+        label_ds = label_ds.map(lambda label: tf.one_hot(label, depth=len(self.class_names)), num_parallel_calls=AUTOTUNE)
+        
         ds = tf.data.Dataset.zip((image_ds, label_ds))
         ds = self.configure_for_performance(ds)
         
