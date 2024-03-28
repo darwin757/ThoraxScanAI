@@ -32,6 +32,16 @@ for category in categories:
 
     # Function to copy files
     def copy_files(files, dataset_type):
+        """
+        Copy files to a specified dataset directory based on the dataset type and category.
+        
+        Parameters:
+            files (list): A list of file paths to be copied.
+            dataset_type (str): The type of dataset.
+        
+        Returns:
+            None
+        """
         for file in files:
             shutil.copy(file, os.path.join(new_dataset_path, dataset_type, category))
 
