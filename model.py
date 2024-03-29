@@ -1,4 +1,3 @@
-
 import tensorflow as tf
 from tensorflow.keras.applications import VGG16
 from tensorflow.keras import layers, models

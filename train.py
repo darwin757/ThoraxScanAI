@@ -1,4 +1,3 @@
-import tensorflow as tf
 from model import build_model
 from custom_data_loader import CustomDataLoader 
 from utils import plot_training_history
