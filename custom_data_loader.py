@@ -4,7 +4,7 @@ import os
 AUTOTUNE = tf.data.experimental.AUTOTUNE
 
 class CustomDataLoader:
-    def __init__(self, dataset_path, img_size=(224, 224), batch_size=32):
+    def __init__(self, dataset_path, img_size=(224, 224), batch_size=32, augment=False):
         """
         Initializes the object with the dataset path, image size, and batch size.
 
@@ -16,6 +16,7 @@ class CustomDataLoader:
         self.dataset_path = dataset_path
         self.img_size = img_size
         self.batch_size = batch_size
+        self.augment = augment
         self.class_names = self.get_class_names()
 
     def get_class_names(self):
@@ -86,9 +87,18 @@ class CustomDataLoader:
         label_ds = label_ds.map(lambda label: tf.one_hot(label, depth=len(self.class_names)), num_parallel_calls=AUTOTUNE)
         
         ds = tf.data.Dataset.zip((image_ds, label_ds))
+        
+        if self.augment and subset == 'train':
+            ds.map(self.augment_image, num_parallel_calls=AUTOTUNE)
         ds = self.configure_for_performance(ds)
         
         return ds
+
+    def augment_image(self, image, label):
+        image = tf.image.random_flip_left_right(image)
+        image = tf.image.random_brightness(image, max_delta=0.1) # Adjust brightness by a small amount
+        image = tf.image.rot90(image, tf.random.uniform(shape=[], minval=0, maxval=4, dtype=tf.int32)) # Random rotation
+        return image, label
 
     def get_data_loaders(self):
         """
@@ -100,7 +110,7 @@ class CustomDataLoader:
         return train_ds, val_ds, test_ds
 
 dataset_path = "ThoraxScanData"  
-data_loader = CustomDataLoader(dataset_path=dataset_path)
+data_loader = CustomDataLoader(dataset_path=dataset_path, augment=True)
 train_ds, val_ds, test_ds = data_loader.get_data_loaders()
 
 
