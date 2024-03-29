@@ -6,15 +6,14 @@ ThoraxScanAI is an advanced deep learning project aimed at classifying lung dise
 
 The project is structured into several key scripts, each fulfilling a specific role in the development and deployment of the machine learning model:
 
-- `split_dataset.py`: Splits the original dataset into training, validation, and test sets.
-- `data_preprocessing.py`: Prepares the data for training, including augmentation techniques.
-- `model.py`: Defines the model architecture using VGG16 as a base for transfer learning.
-- `train.py`: Orchestrates the model training process with callbacks for efficient learning.
-- `evaluate.py`: Evaluates the trained model on a test set and generates performance metrics.
-- `utils.py`: Contains utility functions such as plotting training history and processing single images for prediction.
-- `predict_single_image.py`: Allows for classifying a single X-ray image using the trained model, demonstrating model usage on individual cases.
 
-## Getting Started
+- `split_dataset.py`: Organizes the original dataset into training, validation, and test sets to ensure a proper distribution of data across different phases.
+- `custom_data_loader.py`: A comprehensive script for loading and preprocessing data. It supports data augmentation for the training set to enhance model generalization.
+- `model.py`: Constructs the model architecture, leveraging VGG16 for transfer learning and adding custom layers for the specific task of lung disease classification.
+- `train.py`: Manages the model training process, incorporating callbacks for optimization and early stopping to improve learning efficiency.
+- `evaluate.py`: Assesses the trained model on the test dataset, providing key performance metrics to gauge the model's effectiveness.
+- `utils.py`: Contains utility functions for visualizing training progress and preprocessing single images for model predictions.
+- `predict_single_image.py`: Demonstrates the application of the trained model to classify individual X-ray images, showcasing the model's practical utility.
 
 ## Getting Started
 
