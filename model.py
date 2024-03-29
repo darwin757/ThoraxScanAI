@@ -26,6 +26,7 @@ def build_model(num_classes):
     x = data_augmentation(inputs)
     x = base_model(x, training=False)
     x = layers.GlobalAveragePooling2D()(x)
+    x = layers.Dense(1024, activation='relu', kernel_regularizer=tf.keras.regularizers.l2(1e-4))(x)
     x = layers.Dense(1024, activation='relu')(x)
     x = layers.Dropout(0.5)(x)
     outputs = layers.Dense(num_classes, activation='softmax')(x)
