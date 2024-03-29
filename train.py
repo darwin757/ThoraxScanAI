@@ -1,3 +1,4 @@
+import tensorflow as tf
 from model import build_model
 from custom_data_loader import CustomDataLoader 
 from utils import plot_training_history
@@ -46,4 +47,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    with tf.device('/gpu:0'):
+        main()
