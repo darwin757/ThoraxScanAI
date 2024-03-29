@@ -4,6 +4,10 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, precision_recall_fscore_support
 import itertools
 import matplotlib.pyplot as plt
+from custom_data_loader import CustomDataLoader
+
+model_path = 'best_model.h5'
+dataset_path = 'ThoraxScanData'
 
 def load_model(model_path):
     """
@@ -64,35 +68,25 @@ def plot_confusion_matrix(cm, classes, normalize=False, title='Confusion matrix'
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
 
-def evaluate_model(model, test_generator):
-    """
-    Predicts on the test data using the given model and evaluates the performance using confusion matrix, classification report, and various metrics.
-    
-    Parameters:
-    - model: The trained model to use for prediction.
-    - test_generator: The generator for the test data.
-    
-    Returns:
-    None
-    """
-    # Predict on the test data
-    Y_pred = model.predict(test_generator, verbose=1)
-    y_pred = np.argmax(Y_pred, axis=1)
+def evaluate_model(model, test_ds, class_names):
+    y_true = []
+    y_pred = []
 
-    # True labels
-    y_true = test_generator.classes
+    for images, labels in test_ds:
+        preds = model.predict(images)
+        y_pred.extend(np.argmax(preds, axis=1))
+        y_true.extend(np.argmax(labels, axis=1))
 
-    # Confusion Matrix
+    # Generate and print the classification report
+    print('Classification Report')
+    print(classification_report(y_true, y_pred, target_names=class_names))
+
+    # Generate the confusion matrix
     cm = confusion_matrix(y_true, y_pred)
     print('Confusion Matrix')
     print(cm)
 
-    # Classification Report
-    target_names = list(test_generator.class_indices.keys())
-    print('Classification Report')
-    print(classification_report(y_true, y_pred, target_names=target_names))
-
-    # Accuracy, Precision, Recall, F1-Score
+    # Calculate accuracy, precision, recall, and F1 score
     accuracy = accuracy_score(y_true, y_pred)
     precision, recall, f1_score, _ = precision_recall_fscore_support(y_true, y_pred, average='weighted')
     print(f'Accuracy: {accuracy*100:.2f}%')
@@ -102,13 +96,12 @@ def evaluate_model(model, test_generator):
 
     # Plot Confusion Matrix
     plt.figure(figsize=(10,10))
-    plot_confusion_matrix(cm, classes=target_names, title='Confusion Matrix')
+    plot_confusion_matrix(cm, classes=data_loader.class_names, title='Confusion Matrix')
 
 if __name__ == '__main__':
-    model_path = 'best_model.h5'
-    test_dir = 'ThoraxScanData/test'
-    
     model = load_model(model_path)
-    test_generator = create_test_generator(test_dir)
-    evaluate_model(model, test_generator)
+    data_loader = CustomDataLoader(dataset_path=dataset_path)
+    _, _, test_ds = data_loader.get_data_loaders()
+    class_names = data_loader.class_names
+    evaluate_model(model, test_ds, class_names)
     plt.show()

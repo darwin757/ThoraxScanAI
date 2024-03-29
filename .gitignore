@@ -2,4 +2,4 @@ __pycache__/
 # Ignore processed dataset directory
 ThoraxScanData/
 # Ignore trained model file
-best_model.h5
+*.h5
