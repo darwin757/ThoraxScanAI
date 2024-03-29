@@ -31,8 +31,8 @@ def main():
     # Callbacks
     callbacks = [
         ModelCheckpoint('best_model.h5', save_best_only=True),
-        EarlyStopping(patience=10),
-        ReduceLROnPlateau(factor=0.2, patience=5, min_lr=1e-6)
+        EarlyStopping(patience=20),
+        ReduceLROnPlateau(factor=0.2, patience=5, min_lr=1e-3)
     ]
 
     # Train the model
